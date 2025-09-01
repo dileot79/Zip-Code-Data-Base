@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dumpster Rental Zip Code Lookup</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { padding: 10px; margin: 5px; }
+    .result { margin-top: 20px; padding: 15px; border: 1px solid #ccc; }
+    .products { margin-top: 10px; }
+    .products li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h2>Find Dumpster Rental Services in Your Area</h2>
+  <p>Enter your ZIP code to see available services:</p>
+
+  <input type="text" id="zipInput" placeholder="Enter ZIP code">
+  <button onclick="searchZip()">Search</button>
+
+  <div id="result" class="result"></div>
+
+  <script>
+    // Example ZIP database with city, state, and products
+    const zipDatabase = {
+      "10001": { 
+        city: "New York", 
+        state: "NY",
+        products: ["10 Yard Dumpster", "20 Yard Dumpster", "Construction Debris Hauling"]
+      },
+      "07001": { 
+        city: "Avenel", 
+        state: "NJ",
+        products: ["15 Yard Dumpster", "30 Yard Dumpster", "Commercial Waste Disposal"]
+      },
+      "60601": { 
+        city: "Chicago", 
+        state: "IL",
+        products: ["10 Yard Dumpster", "Roll-Off Containers", "Residential Cleanouts"]
+      }
+      // Add more ZIPs as needed
+    };
+
+    function searchZip() {
+      const zip = document.getElementById("zipInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (zipDatabase[zip]) {
+        const data = zipDatabase[zip];
+        let productsHTML = "<ul class='products'>";
+        data.products.forEach(p => {
+          productsHTML += `<li>${p}</li>`;
+        });
+        productsHTML += "</ul>";
+
+        resultDiv.innerHTML = `
+          <h3>Service Area Found</h3>
+          <p><strong>City:</strong> ${data.city}</p>
+          <p><strong>State:</strong> ${data.state}</p>
+          <h4>Available Services:</h4>
+          ${productsHTML}
+        `;
+      } else {
+        resultDiv.innerHTML = "<p>Sorry, no services found for that ZIP code.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
